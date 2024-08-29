@@ -7,7 +7,7 @@ hide: true
 
 # My journey starts here.
 
-When setting up the tools, I had trouble navigating through the terminal to install packages such as homebrew. 
+When setting up the tools, I had trouble navigating through the terminal to install packages such as homebrew and cloning the nighthawk portfolio. To resolve this problem I had to reinstall the nighthawk portfolio and forking it in github first than downloading it to my terminal. To install homebrew succesfully, I asked a friend and chatGPT to help me out and I discovered that I was doing it for the Windows method when I had a Mac. I was able to overcome all these problems and being able to actually work on this project.    
 
 
 <html lang="en">
