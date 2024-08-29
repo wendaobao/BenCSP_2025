@@ -7,6 +7,9 @@ hide: true
 
 # My journey starts here.
 
+When setting up the tools, I had trouble navigating through the terminal to install packages such as homebrew. 
+
+
 <html lang="en">
   
 <body>
