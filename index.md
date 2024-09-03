@@ -92,6 +92,8 @@ When setting up the tools, I had trouble navigating through the terminal to inst
     document.head.append(script);
 });
 </script>
+ 
+ <img src="mario_animation.png" alt="mario">
 
 </body>
 </html>
