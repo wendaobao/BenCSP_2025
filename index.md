@@ -2,23 +2,18 @@
 layout: base
 title: Student Home 
 description: Home Page
+Author: Thomas Bao
 Image: /images/mario_animation.png
 hide: true
 ---
 
-# My journey starts here.
-
-When setting up the tools, I had trouble navigating through the terminal to install packages such as homebrew and cloning the nighthawk portfolio. To resolve this problem I had to reinstall the nighthawk portfolio and forking it in github first than downloading it to my terminal. To install homebrew succesfully, I asked a friend and chatGPT to help me out and I discovered that I was doing it for the Windows method when I had a Mac. I was able to overcome all these problems and being able to actually work on this project.    
 
 
 
-<!-- Liquid:  statements -->
-
-<!-- Include submenu from _includes to top of pages -->
 <!--- Concatenation of site URL to frontmatter image  --->
 {% assign sprite_file = site.baseurl | append: page.image %}
 <!--- Has is a list variable containing mario metadata for sprite --->
-{% assign hash = site.data.mario_metadata %}  
+{% assign hash = site.data.mario_metadata %}
 <!--- Size width/height of Sprit images --->
 {% assign pixels = 256 %}
 
@@ -99,17 +94,32 @@ When setting up the tools, I had trouble navigating through the terminal to inst
 
     startWalking() {
       this.stopAnimate();
-      this.animate(this.obj["Walk"], 3);
+      this.animate(this.obj["Walk"], 7.5);
+    }
+
+    startWalkingLeft() {
+        this.stopAnimate();
+        this.animate(this.obj["WalkL"], -7.5);
+    }
+
+    startRunningLeft() {
+        this.stopAnimate();
+        this.animate(this.obj["Run1L"], -15);
     }
 
     startRunning() {
       this.stopAnimate();
-      this.animate(this.obj["Run1"], 6);
+      this.animate(this.obj["Run1"], 15);
     }
 
     startPuffing() {
       this.stopAnimate();
       this.animate(this.obj["Puff"], 0);
+    }
+
+    startPuffingLeft() {
+      this.stopAnimate();
+      this.animate(this.obj["PuffL"], 0);
     }
 
     startCheering() {
@@ -127,6 +137,11 @@ When setting up the tools, I had trouble navigating through the terminal to inst
       this.animate(this.obj["Rest"], 0);
     }
 
+    startRestingLeft() {
+      this.stopAnimate();
+      this.animate(this.obj["RestL"], 0);
+    }
+
     stopAnimate() {
       clearInterval(this.tID);
     }
@@ -139,21 +154,53 @@ When setting up the tools, I had trouble navigating through the terminal to inst
   window.addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight") {
       event.preventDefault();
-      if (event.repeat) {
-        mario.startCheering();
-      } else {
         if (mario.currentSpeed === 0) {
-          mario.startWalking();
-        } else if (mario.currentSpeed === 3) {
-          mario.startRunning();
+            mario.startWalking();
+        } 
+        else if (mario.currentSpeed === 7.5) {
+            mario.startRunning();
         }
-      }
-    } else if (event.key === "ArrowLeft") {
+        else if (mario.currentSpeed < 0){
+            mario.startResting();
+        }
+    } 
+
+    else if (event.key === "ArrowDown") {
       event.preventDefault();
       if (event.repeat) {
         mario.stopAnimate();
-      } else {
+      } 
+      else if (mario.currentSpeed >= 0){
         mario.startPuffing();
+      }
+      else {
+        mario.startPuffingLeft();
+      }
+    } 
+
+    else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        if (mario.currentSpeed === 0) {
+            mario.startWalkingLeft();
+        } 
+        else if (mario.currentSpeed === -7.5) {
+            mario.startRunningLeft();
+        }
+        else if (mario.currentSpeed > 0){
+            mario.startRestingLeft();
+        }
+    }
+
+    else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (mario.currentSpeed === 0) {
+        mario.startFlipping();
+      }
+      else if (mario.currentSpeed < 0) {
+        mario.startRestingLeft();
+      }
+      else if (mario.currentSpeed > 0) {
+        mario.startResting();
       }
     }
   });
@@ -165,7 +212,7 @@ When setting up the tools, I had trouble navigating through the terminal to inst
       // move right
       if (currentSpeed === 0) { // if at rest, go to walking
         mario.startWalking();
-      } else if (currentSpeed === 3) { // if walking, go to running
+      } else if (currentSpeed === 7.5) { // if walking, go to running
         mario.startRunning();
       }
     } else {
@@ -179,20 +226,55 @@ When setting up the tools, I had trouble navigating through the terminal to inst
     mario.stopAnimate();
   });
 
-  //start animation on window focus
-  window.addEventListener("focus", () => {
-     mario.startFlipping();
-  });
-
   //start animation on page load or page refresh
   document.addEventListener("DOMContentLoaded", () => {
     // adjust sprite size for high pixel density devices
     const scale = window.devicePixelRatio;
     const sprite = document.querySelector(".sprite");
-    sprite.style.transform = `scale(${0.2 * scale})`;
+    sprite.style.transform = `scale(${.5 * scale})`;
     mario.startResting();
   });
 
 </script>
 
 
+# My journey starts here.
+
+When setting up the tools, I had trouble navigating through the terminal to install packages such as homebrew and cloning the nighthawk portfolio. To resolve this problem I had to reinstall the nighthawk portfolio and forking it in github first than downloading it to my terminal. To install homebrew succesfully, I asked a friend and chatGPT to help me out and I discovered that I was doing it for the Windows method when I had a Mac. I was able to overcome all these problems and being able to actually work on this project. 
+
+
+
+<style>
+  .fancy-button {
+    font-size: 20px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #FF5722; /* Bright orange */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s ease-in-out; /* Smooth transition for hover/click effects */
+  }
+
+  .fancy-button:hover {
+    background-color: #FFC107; /* Bright yellow on hover */
+  }
+
+  .fancy-button:active {
+    background-color: #FFEB3B; /* Even lighter yellow when clicked */
+    transform: scale(0.95); /* Shrink effect on click */
+  }
+</style>
+
+<a href="">
+  <button class="fancy-button">Link to nothing</button>
+</a>
+
+<a href="https://nighthawkcoders.github.io/teacher_portfolio/">
+  <button class="fancy-button">Link to CSP Page</button>
+</a>
+
+<a href="https://delnorte.powayusd.com/apps/bell_schedules/">
+  <button class="fancy-button">Link to Del Norte Bell Schedule Page</button>
+</a>
